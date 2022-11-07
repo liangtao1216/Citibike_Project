@@ -36,17 +36,50 @@ map.on('load', () => {
         'layout': {
             'line-join': 'round',
             'line-cap': 'round',
-            'visibility': 'visible',
+            'visibility': 'none',
         },
         'paint': {
             'line-color': {
                 property: 'In_Protected_diff',
                 type: 'interval',
                 stops: [
-                    [0, '#FFD600'],
-                    [50, '#FFAB00'],
-                    [100, '#FF6D00'],
-                    [150, '#DD2C00'],
+                    [0, '#2979FF'],
+                    [100, '#ffc300'],
+                    [150, '#ff3d00'],
+                ]
+            },
+
+            'line-width': {
+                property: 'With_BikeLane',
+                type: 'categorical',
+                stops: [
+                    [0, 10],
+                    [1, 10]]
+            },
+
+        },
+        //'filter': ['all', filterCorridor]
+
+    });
+
+
+    map.addLayer({
+        'id': 'Unprotected',
+        'type': 'line',
+        'source': 'Case',
+        'layout': {
+            'line-join': 'round',
+            'line-cap': 'round',
+            'visibility': 'none',
+        },
+        'paint': {
+            'line-color': {
+                property: 'In_Unprotected_diff',
+                type: 'interval',
+                stops: [
+                    [0, '#2979FF'],
+                    [100, '#ffc300'],
+                    [150, '#ff3d00'],
                 ]
             },
 
@@ -110,23 +143,7 @@ map.on('load', () => {
     });
 
 
-    // Vison Zero
-    map.addSource('Vision_Zero', {
-        'type': 'geojson',
-        'data': 'https://media.githubusercontent.com/media/liangtao1216/HCI_Map/main/data/VZV_Priority_Zones_or_Areas.geojson'
-    });
-    map.addLayer({
-        'id': 'Vision_Zero',
-        'type': 'fill',
-        'source': 'Vision_Zero',
-        'layout': {
-            'visibility': 'none',
-        },
-        'paint': {
-            'fill-color': '#ffffff',
-            'fill-opacity': 0.6
-        }
-    });
+
 });
 
 ////////////////////////
@@ -153,6 +170,46 @@ map.on('click', 'BIKE', function (e) {
             + '<p>' + '<b>Citi Bike Daily Trips:</b> ' + e.features[0].properties.Flow_Median + '</p>'
             + '<p>' + '<b>Predicted Trips:</b> ' + e.features[0].properties.Flow_Median_predict + '</p>'
             + '<p>' + '<b>Absolute Error:</b> ' + e.features[0].properties.Error_abs + '</p>'
+        )
+        .addTo(map);
+});
+
+map.on('click', 'Protected', function (e) {
+    new mapboxgl.Popup({
+        closeButton: true,
+        closeOnClick: true,
+        anchor: 'bottom',
+        offset: [0, -10],
+        className: 'popupWindow'
+    })
+        .setLngLat(e.lngLat)
+        .setHTML('<h5>' + e.features[0].properties.Street
+            + '<br>' + '-----------------------' +
+            '</h4>'
+
+            + '<p>' + '<b>SegmentID:</b>' + e.features[0].properties.SegmentID + '</p>'
+            + '<p>' + '<b>Before:</b> ' + e.features[0].properties.Flow_Median_predict + '</p>'
+            + '<p>' + '<b>After:</b> ' + e.features[0].properties.In_Protected + '</p>'
+        )
+        .addTo(map);
+});
+
+map.on('click', 'Unprotected', function (e) {
+    new mapboxgl.Popup({
+        closeButton: true,
+        closeOnClick: true,
+        anchor: 'bottom',
+        offset: [0, -10],
+        className: 'popupWindow'
+    })
+        .setLngLat(e.lngLat)
+        .setHTML('<h5>' + e.features[0].properties.Street
+            + '<br>' + '-----------------------' +
+            '</h4>'
+
+            + '<p>' + '<b>SegmentID:</b>' + e.features[0].properties.SegmentID + '</p>'
+            + '<p>' + '<b>Before:</b> ' + e.features[0].properties.Flow_Median_predict + '</p>'
+            + '<p>' + '<b>After:</b> ' + e.features[0].properties.In_Unprotected + '</p>'
         )
         .addTo(map);
 });
@@ -264,9 +321,9 @@ $("#mySwitch1").on('change', function () {
 ////////////////////// 
 
 var layers1 = [
-    ['BIKE', 'BIKE'],
-    ['Vision_Zero', 'Vision-Zero Area'],
-    ['Protected', 'Case Study: Protected Lane'],
+    ['BIKE', 'Bike'],
+    ['Protected', '11Ave: Protected Lane'],
+    ['Unprotected', '11Ave: Unprotected Lane'],
 ];
 
 
@@ -298,12 +355,12 @@ map.on('load', function () {
         } else {
             $("#legend-1").hide();
         }
-        if (map.getLayoutProperty('Covid-19-DeathRate', 'visibility') == 'visible') {
+        if (map.getLayoutProperty('Protected', 'visibility') == 'visible') {
             $("#legend-2").show();
         } else {
             $("#legend-2").hide();
         }
-        if (map.getLayoutProperty('Crash', 'visibility') == 'visible') {
+        if (map.getLayoutProperty('Unprotected', 'visibility') == 'visible') {
             $("#legend-3").show();
         } else {
             $("#legend-3").hide();
