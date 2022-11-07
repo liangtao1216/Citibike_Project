@@ -20,47 +20,47 @@ $("#legend-4").hide();
 //////////////////////// 
 map.on('load', () => {
 
-    // Ped and cyclist injured and death
-    map.addSource('Crash', {
+
+    // Case 11 Ave
+
+    map.addSource('Case', {
         'type': 'geojson',
-        'data': 'https://media.githubusercontent.com/media/liangtao1216/HCI_Map/main/data/PedCrash2022Geo.geojson'
+        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Case11.geojson'
     });
+
+
     map.addLayer({
-        'id': 'Crash',
-        'type': 'circle',
-        'source': 'Crash',
+        'id': 'Protected',
+        'type': 'line',
+        'source': 'Case',
         'layout': {
-            'visibility': 'none'
+            'line-join': 'round',
+            'line-cap': 'round',
+            'visibility': 'visible',
         },
         'paint': {
-            'circle-radius': [
-                'interpolate',
-                ['linear'],
-                ['number', ['get', 'PedCrash']],
-                1,
-                4,
-                5,
-                24
-            ],
-            'circle-color': [
-                'interpolate',
-                ['linear'],
-                ['number', ['get', 'PedCrash']],
-                0,
-                '#2DC4B2',
-                1,
-                '#3BB3C3',
-                2,
-                '#669EC4',
-                3,
-                '#8B88B6',
-                4,
-                '#A2719B',
-                5,
-                '#AA5E79'
-            ],
-            'circle-opacity': 0.8,
-        }
+            'line-color': {
+                property: 'In_Protected_diff',
+                type: 'interval',
+                stops: [
+                    [0, '#FFD600'],
+                    [50, '#FFAB00'],
+                    [100, '#FF6D00'],
+                    [150, '#DD2C00'],
+                ]
+            },
+
+            'line-width': {
+                property: 'With_BikeLane',
+                type: 'categorical',
+                stops: [
+                    [0, 10],
+                    [1, 10]]
+            },
+
+        },
+        //'filter': ['all', filterCorridor]
+
     });
 
 
@@ -266,7 +266,7 @@ $("#mySwitch1").on('change', function () {
 var layers1 = [
     ['BIKE', 'BIKE'],
     ['Vision_Zero', 'Vision-Zero Area'],
-    ['Crash', 'Pedestrians Crashes'],
+    ['Protected', 'Case Study: Protected Lane'],
 ];
 
 
