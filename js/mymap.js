@@ -69,7 +69,7 @@ map.on('load', () => {
 
     map.addSource('BIKE', {
         'type': 'geojson',
-        'data': 'https://media.githubusercontent.com/media/liangtao1216/HCI_Map/main/data/Bike_Sample_Geo.geojson'
+        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Sample_Geo.geojson?token=GHSAT0AAAAAABZ6QDJZXHARYSHHEEPDJK3QY3ITWUA'
     });
 
     map.addLayer({
