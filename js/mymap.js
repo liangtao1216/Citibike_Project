@@ -69,7 +69,7 @@ map.on('load', () => {
 
     map.addSource('BIKE', {
         'type': 'geojson',
-        'data': 'https://media.githubusercontent.com/media/liangtao1216/Citibike_Project/main/data/Bike_Predict_Geo.geojson'
+        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Predict.geojson'
     });
 
     let index = 'Flow_Median';
@@ -151,24 +151,13 @@ map.on('click', 'BIKE', function (e) {
             + '<p>' + '<b>BikeLane:</b> ' + e.features[0].properties.With_BikeLane + '</p>'
             + '<p>' + '<b>Protected Bike Lane:</b> ' + e.features[0].properties.Protected_Lane + '</p>'
             + '<p>' + '<b>Citi Bike Daily Trips:</b> ' + e.features[0].properties.Flow_Median + '</p>'
+            + '<p>' + '<b>Predicted Trips:</b> ' + e.features[0].properties.Flow_Median_predict + '</p>'
+            + '<p>' + '<b>Absolute Error:</b> ' + e.features[0].properties.Error_abs + '</p>'
         )
         .addTo(map);
 });
 
-map.on('click', 'Crash', function (e) {
-    new mapboxgl.Popup({
-        closeButton: true,
-        closeOnClick: true,
-        anchor: 'bottom',
-        offset: [0, -10],
-        className: 'popupWindow'
-    })
-        .setLngLat(e.lngLat)
-        .setHTML(
-            `<p><b>PedCrash:</b><br>${e.features[0].properties.PedCrash}</p>`
-        )
-        .addTo(map);
-});
+
 
 function myPopup(idName) {
     var popup = document.getElementById(idName);
@@ -202,6 +191,8 @@ document
 
                 ]
             }
+            $("#score-legend").show();
+            $("#legend-1").hide();
 
         } else if (select === 'predict') {
             index = 'Flow_Median_predict';
@@ -218,6 +209,8 @@ document
 
                 ]
             }
+            $("#score-legend").show();
+            $("#legend-1").hide();
 
         } else if (select === 'error') {
             index = 'Error_abs';
@@ -235,6 +228,7 @@ document
                 ]
             }
             $("#legend-1").show();
+            $("#score-legend").hide();
         }
 
 
