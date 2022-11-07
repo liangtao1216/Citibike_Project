@@ -1,2 +1,4 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+data/Bike_Predict_Geo.geojson filter=lfs diff=lfs merge=lfs -text
+data/VZV_Priority_Zones_or_Areas.geojson filter=lfs diff=lfs merge=lfs -text
