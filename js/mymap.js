@@ -69,7 +69,7 @@ map.on('load', () => {
 
     map.addSource('BIKE', {
         'type': 'geojson',
-        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Predict_Geo.geojson?token=GHSAT0AAAAAABZ6QDJZKRGRWRDH2CS3WTHUY3IU6HQ'
+        'data': 'https://media.githubusercontent.com/media/liangtao1216/Citibike_Project/main/data/Bike_Predict_Geo.geojson'
     });
 
     let index = 'Flow_Median';
@@ -234,7 +234,7 @@ document
 
                 ]
             }
-            $("#legend-2").show();
+            $("#legend-1").show();
         }
 
 
