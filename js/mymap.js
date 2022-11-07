@@ -65,12 +65,14 @@ map.on('load', () => {
 
 
 
-    // CITI BIKE SAMPLE DATA
+    // CITI BIKE DATA
 
     map.addSource('BIKE', {
         'type': 'geojson',
-        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Sample_Geo.geojson?token=GHSAT0AAAAAABZ6QDJZXHARYSHHEEPDJK3QY3ITWUA'
+        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Predict_Geo.geojson?token=GHSAT0AAAAAABZ6QDJZKRGRWRDH2CS3WTHUY3IU6HQ'
     });
+
+    let index = 'Flow_Median';
 
     map.addLayer({
         'id': 'BIKE',
@@ -83,7 +85,7 @@ map.on('load', () => {
         },
         'paint': {
             'line-color': {
-                property: 'Flow_Median',
+                property: index,
                 type: 'interval',
                 stops: [
                     [2, '#2979FF'],
@@ -185,35 +187,60 @@ document
     .addEventListener('change', (event) => {
         const select = event.target.value;
         // update the map filter
-        if (select === 'hci') {
-            index = 'HCI';
-        } else if (select === 'se') {
-            index = 'SE';
-        } else if (select === 'e') {
-            index = 'E';
-        } else if (select === 'ne') {
-            index = 'NE';
-        } else if (select === 'n') {
-            index = 'N';
-        } else if (select === 't') {
-            index = 'T';
+        if (select === 'sample') {
+            index = 'Flow_Median';
+
+            var CustomColor = {
+                property: index,
+                type: 'interval',
+                stops: [
+                    [2, '#2979FF'],
+                    [14, '#42c3ff'],
+                    [41, '#e0e0e0'],
+                    [108, '#ffc300'],
+                    [307, '#ff3d00'],
+
+                ]
+            }
+
+        } else if (select === 'predict') {
+            index = 'Flow_Median_predict';
+
+            var CustomColor = {
+                property: index,
+                type: 'interval',
+                stops: [
+                    [2, '#2979FF'],
+                    [14, '#42c3ff'],
+                    [41, '#e0e0e0'],
+                    [108, '#ffc300'],
+                    [307, '#ff3d00'],
+
+                ]
+            }
+
+        } else if (select === 'error') {
+            index = 'Error_abs';
+
+            var CustomColor = {
+                property: index,
+                type: 'interval',
+                stops: [
+                    [0, '#2979FF'],
+                    [50, '#42c3ff'],
+                    [100, '#e0e0e0'],
+                    [200, '#ffc300'],
+                    [300, '#ff3d00'],
+
+                ]
+            }
+            $("#legend-2").show();
         }
 
 
 
-        let CustomColor = {
-            property: index,
-            type: 'interval',
-            stops: [
-                [0, '#ff3d00'],
-                [20, '#ffc300'],
-                [40, '#e0e0e0'],
-                [60, '#42c3ff'],
-                [80, '#2979FF'],
 
-            ]
-        }
-        map.setPaintProperty('HCI', 'line-color', CustomColor);
+        map.setPaintProperty('BIKE', 'line-color', CustomColor);
     });
 
 
