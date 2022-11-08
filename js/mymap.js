@@ -350,10 +350,10 @@ map.on('load', function () {
             map.setLayoutProperty(clickedLayer, 'visibility', 'visible');
         }
         //change legend
-        if (map.getLayoutProperty('Pop', 'visibility') == 'visible') {
-            $("#legend-1").show();
+        if (map.getLayoutProperty('BIKE', 'visibility') == 'visible') {
+            $("#score-legend").show();
         } else {
-            $("#legend-1").hide();
+            $("#score-legend").hide();
         }
         if (map.getLayoutProperty('Protected', 'visibility') == 'visible') {
             $("#legend-2").show();
