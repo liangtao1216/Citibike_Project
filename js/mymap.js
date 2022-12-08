@@ -102,7 +102,7 @@ map.on('load', () => {
 
     map.addSource('BIKE', {
         'type': 'geojson',
-        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Predict_2.geojson'
+        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Bike_Predict.geojson'
     });
 
     let index = 'Flow_Median';
