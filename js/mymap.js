@@ -21,6 +21,8 @@ $("#legend-4").hide();
 map.on('load', () => {
 
 
+
+
     // Case 11 Ave
 
     map.addSource('Case', {
@@ -140,6 +142,25 @@ map.on('load', () => {
         },
         //'filter': ['all', filterCorridor]
 
+    });
+
+    // bike station
+    map.addSource('Station', {
+        'type': 'geojson',
+        'data': 'https://raw.githubusercontent.com/liangtao1216/Citibike_Project/main/data/Station_nyc.geojson'
+    });
+    map.addLayer({
+        'id': 'Station',
+        'type': 'circle',
+        'source': 'Station',
+        'layout': {
+            'visibility': 'none'
+        },
+        'paint': {
+            'circle-radius': 5,
+            'circle-color': '#AA5E79',
+            'circle-opacity': 0.8,
+        }
     });
 
 
@@ -322,6 +343,7 @@ $("#mySwitch1").on('change', function () {
 
 var layers1 = [
     ['BIKE', 'Bike'],
+    ['Station', 'Station'],
     ['Protected', '11Ave: Protected Lane'],
     ['Unprotected', '11Ave: Unprotected Lane'],
 ];
